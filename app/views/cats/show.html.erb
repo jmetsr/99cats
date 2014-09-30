@@ -22,3 +22,21 @@
 
 <a href="<%= edit_cat_url(@cat) %>">Edit this Cat!</a>
 <a href="<%= cats_url %>">Back to Cat Index</a>
+<br>
+<h3>Rental Requests</h3>
+<table>
+	<tr>
+		<td> start date </td>
+		<td> end date </td>
+		<td> status </td>
+	</tr>
+	<% @cat.cat_rental_requests.order(:start_date).each do |request| %>
+		<tr>
+			<td><%= request.start_date %></td>
+			<td><%= request.end_date %></td>
+			<td><%= request.status%></td>
+			<td><%= button_to ("Approve", :controller => "cat_rental_requests", :action => :approve ) %></td>
+			<td><%= button_to ("Deny", :controller => "cat_rental_requests", :action => :deny) %></td>
+		</tr>
+	<% end %>
+</table>

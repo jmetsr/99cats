@@ -4,18 +4,23 @@ class CatRentalRequest < ActiveRecord::Base
   validates :start_date, :presence => true
   validates :end_date, :presence => true
   validates :status, :presence => true, inclusion: { in: %w(PENDING APPROVED DENIED),message: "not an ok status" }
-  validate :no_overlaps
+  validate :no_overlaps, message: "Time Frame already reserved"
   belongs_to(:cat)
 
-    #def initialize()
-     # @cat_id = options[:cat_id]
-    #  @start_date = options[:start_date]
-     # @end_date = options[:end_date]
-      #@status = options[:status]
-      #end
+  def approve!
+    CatRentalRequest.transaction do
+      self.status = "APPROVED"
+      self.save!
+      overlapping_pending_requests.each { |request| request.deny! }
+    end
+  end
 
+  def deny!
+    self.status = "DENIED"
+    self.save!
+  end
 
-  # private
+#  private
 
   def no_overlaps
     self.overlapping_approved_requests.empty?
@@ -30,6 +35,10 @@ class CatRentalRequest < ActiveRecord::Base
     AND ((cat_rental_requests.start_date BETWEEN :start_date AND :end_date)
     OR (cat_rental_requests.end_date BETWEEN :start_date AND :end_date))
     SQL
+  end
+
+  def overlapping_pending_requests
+    self.overlapping_requests.where("cat_rental_requests.status = 'PENDING'")
   end
 
   def overlapping_approved_requests

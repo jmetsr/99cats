@@ -53,5 +53,15 @@ RentalCats::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :cats
+  resources :cats do
+    resources :cat_rental_requests
+
+  end
+  post "/cats/:id/cat_rental_request/:id/approve", to: "cat_rental_requests#approve", as: "request_approve"
+  post "/cats/:id/cat_rental_request/:id/deny", to: "cat_rental_requests#deny", as: "request_deny"
+
+  # verb "/cats/:id/cat_rental_request/:id/deny", to: "controller#action", as: "helper"
+  # get "/favorites", to: "users#favorites", as: "aslkdfjk"
+
+
 end
