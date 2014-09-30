@@ -1,4 +1,4 @@
-<form action="<%= cats_url %>" method="post">
+<!-- <form action="<%= cats_url %>" method="post">
 
 	<label for="cat_name">Name</label>
 	<input type="text" name="cat[name]" id="cat_name">
@@ -24,4 +24,6 @@
 	<label for="cat_description">Description of Cat</label>
 	<textarea name="cat[description]" id="cat_description"></textarea>
 <br><br>
-	<input type="submit" value="make a new cat today">
+	<input type="submit" value="make a new cat today"> -->
+
+<%= render "form", locals: {cat: @cat} %>
