@@ -6,9 +6,16 @@ class Cat < ActiveRecord::Base
     message: "not a valid color" }
   validates :sex, inclusion: { in: %w(M F),
     message: "not a good cat sex" }
-  validates :birth_date, :color, :sex, :name, :description, presence: :true
+  validates :birth_date, :color, :sex, :name, :description, :user_id, presence: :true
 
   has_many(:cat_rental_requests)
+
+  belongs_to(:owner,
+    class_name: "User",
+    foreign_key: :user_id,
+    primary_key: :id
+  )
+
   before_destroy :dependent => :destroy
 
   def age

@@ -1,6 +1,6 @@
-<h1>Register a New User</h1>
+<h1>Log in</h1>
 
-<form action="<%= users_url %>" method="POST">
+<form action="<%= sessions_url %>" method="POST">
 	<input
 	     name="authenticity_token"
 	     type="hidden"
@@ -13,10 +13,12 @@
 	<input type="password" name="user[password]" id="password">
 
 
-	<input type="submit" value="Register User">
+	<input type="submit" value="Log in">
 <% if flash[:errors] %>
 	<% flash[:errors].each do |error| %>
 		<%= error %>
 	<% end %>
 <% end %>
 </form>
+<br>
+<a href="<%= new_user_url %>">Register a new user!</a>

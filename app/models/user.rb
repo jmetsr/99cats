@@ -1,19 +1,25 @@
 class User < ActiveRecord::Base
   # attr_reader :password_digest
   attr_reader :password
-  validates :username, :password_digest, :session_token, presence: :true
+  validates :username, :password_digest, presence: :true
 
   after_initialize :set_session_token
+
+  has_many :cats
 
   def self.generate_session_token
     SecureRandom::urlsafe_base64(16)
   end
 
   def self.find_by_credentials(username, password)
+    user = User.find_by_username(username)
+    return nil if user.nil?
+    user.is_password?(password) ? user : nil
+  end
 
   def password=(password)
     self.password_digest = BCrypt::Password.create(password)
-    # self.save!
+    self.save!
   end
 
   def is_password?(password)

@@ -1,10 +1,14 @@
 <% if @cat.persisted? %>
 	<form action="<%= cat_url(@cat) %>" method="POST">
+
 	<input type="hidden" name="_method" value="PATCH">
 <% else %>
 	<form action="<%= cats_url %>" method="POST">
 <% end %>
-
+		<input
+		     name="authenticity_token"
+		     type="hidden"
+		     value="<%= form_authenticity_token %>">
 	<label for="cat_name">Name</label>
 	<input type="text" name="cat[name]" id="cat_name" value="<%= @cat.name %>">
 	<br>
@@ -27,5 +31,9 @@
 	<label for="cat_description">Description of Cat</label>
 	<textarea name="cat[description]" id="cat_description"><%= @cat.description %></textarea>
 <br><br>
+<% if @cat.persisted? %>
 	<input type="submit" value="change your cat - to a better cat or a worse cat">
+<% else %>
+	<input type="submit" value="Add your cat to the database!">
+<% end %>
 </form>

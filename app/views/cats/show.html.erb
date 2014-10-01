@@ -35,6 +35,24 @@
 			<td><%= request.start_date %></td>
 			<td><%= request.end_date %></td>
 			<td><%= request.status%></td>
+			<% if @cat.owner == current_user %>
+			<td>
+				<form action="<%= request_approve_url(request) %>" method="POST"><button type="submit">Approve!</button>
+			<input
+			     name="authenticity_token"
+			     type="hidden"
+			     value="<%= form_authenticity_token %>">
+
+			</form></td>
+			<td><form action="<%= request_deny_url(request) %>" method="POST"><button type="submit">Deny!</button>
+
+			<input
+			     name="authenticity_token"
+			     type="hidden"
+			     value="<%= form_authenticity_token %>">
+
+			</form></td>
+			<% end %>
 		</tr>
 	<% end %>
 </table>

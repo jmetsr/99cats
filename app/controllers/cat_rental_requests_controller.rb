@@ -19,10 +19,25 @@ class CatRentalRequestsController < ApplicationController
   end
 
   def approve
-    @cat_rental_request.approve!
+    @cat_rental_request = CatRentalRequest.find(params[:id])
+    if @cat_rental_request.cat.owner == current_user
+      @cat_rental_request.approve!
+      redirect_to cat_url(@cat_rental_request.cat)
+    else
+      flash[:errors] = ["You cannot approve a request for someone else's cat!"]
+      redirect_to cat_url(@cat_rental_request.cat)
+    end
   end
+
   def deny
-    @cat_rental_request.deny!
+    @cat_rental_request = CatRentalRequest.find(params[:id])
+    if @cat_rental_request.cat.owner == current_user
+      @cat_rental_request.deny!
+      redirect_to cat_url(@cat_rental_request.cat)
+    else
+      flash[:errors] = ["You cannot approve a request for someone else's cat!"]
+      redirect_to cat_url(@cat_rental_request.cat)
+    end
   end
 
   private

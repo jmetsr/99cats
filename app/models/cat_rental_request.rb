@@ -23,7 +23,7 @@ class CatRentalRequest < ActiveRecord::Base
 #  private
 
   def no_overlaps
-    unless self.overlapping_approved_requests.empty?
+    unless self.overlapping_approved_requests.empty? || self.status == "DENIED"
       errors[:base] << "Your rental timeframe has already been reserved!"
     end
   end
