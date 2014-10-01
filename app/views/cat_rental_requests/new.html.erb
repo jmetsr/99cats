@@ -1,5 +1,12 @@
-<form action="<%= cat_rental_requests_url %>" method="POST">
+<form action="<%= cat_cat_rental_requests_url %>" method="POST">
 <h1> File A Cat Rental Request Form 1040 </h1>
+
+<% if flash.now[:errors] %>
+	<% flash.now[:errors].each do |error| %>
+		<%= error %>
+	<% end %>
+<% end %>
+<br>
 <label for="cat_id">Cat to be Rented</label>
 	<select name="@cat_rental_request[cat_id]" id="cat_id">
 		<% Cat.all.each do |cat| %>
