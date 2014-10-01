@@ -1,10 +1,10 @@
 class CatRentalRequest < ActiveRecord::Base
   before_validation :default_values
-  validates :cat_id, :presence => true
-  validates :start_date, :presence => true
-  validates :end_date, :presence => true
-  validates :status, :presence => true, inclusion: { in: %w(PENDING APPROVED DENIED),message: "not an ok status" }
+  validates :start_date, :end_date, :cat_id, :user_id, :presence => true
+  validates :status, :presence => true, inclusion: { in: %w(PENDING APPROVED DENIED), message: "not an ok status" }
   validate :no_overlaps
+
+  belongs_to(:user)
   belongs_to(:cat)
 
   def approve!

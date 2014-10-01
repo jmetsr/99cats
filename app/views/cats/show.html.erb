@@ -35,6 +35,7 @@
 			<td><%= request.start_date %></td>
 			<td><%= request.end_date %></td>
 			<td><%= request.status%></td>
+			<td><%= request.user.username %></td>
 			<% if @cat.owner == current_user %>
 			<td>
 				<form action="<%= request_approve_url(request) %>" method="POST"><button type="submit">Approve!</button>
